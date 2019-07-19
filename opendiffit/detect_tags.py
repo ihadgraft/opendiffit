@@ -34,10 +34,12 @@ def get_args():
                         help='comply version of csv. Use "-" overwrite the current file (keep a backup).')
     return parser.parse_args()
 
+
 # Acrobat tags to sniff for
 tags = ["<b\'Part", "<b\'Sect", "<b\'Art", "<b\'Content", "<b\'Index", "<b\'BibEntry", "<b\'Lbl", "<b\'Index",
         "<b\'Note", "<b\'Reference", "<b\'Figure", "<b\'Artifact", "<b\'ArtifactSpan", "<b\'LBody", "<b\'Normal",
         "<b\'Heading 1", "<b\'Heading 2", "<b\'H1", "<b\'H2", "<b\'Table","<b\'Span", "<b\'P", "\'Annots"]
+
 
 def detect_tags(input_file, output_file):
     """ Identify PDFs that are tagged """
@@ -128,6 +130,7 @@ def detect_tags(input_file, output_file):
                 writer.writerow(row)
         except Exception as ex:
             logging.error(ex)
+
 
 def label_comply(row,contents):
     """examine the contents of the file"""
