@@ -30,11 +30,14 @@ def get_args():
 
     parser = argparse.ArgumentParser(epilog=example_text, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-i', '--input-file', help='original csv')
-    parser.add_argument('-o', '--output-file', help='comply version of csv. Use "-" overwrite the current file (keep a backup).')
+    parser.add_argument('-o', '--output-file',
+                        help='comply version of csv. Use "-" overwrite the current file (keep a backup).')
     return parser.parse_args()
 
 # Acrobat tags to sniff for
-tags = ["<b\'Part", "<b\'Sect", "<b\'Art", "<b\'Content", "<b\'Index", "<b\'BibEntry", "<b\'Lbl", "<b\'Index", "<b\'Note", "<b\'Reference", "<b\'Figure", "<b\'Artifact", "<b\'ArtifactSpan", "<b\'LBody", "<b\'Normal", "<b\'Heading 1", "<b\'Heading 2", "<b\'H1", "<b\'H2", "<b\'Table","<b\'Span", "<b\'P", "\'Annots"]
+tags = ["<b\'Part", "<b\'Sect", "<b\'Art", "<b\'Content", "<b\'Index", "<b\'BibEntry", "<b\'Lbl", "<b\'Index",
+        "<b\'Note", "<b\'Reference", "<b\'Figure", "<b\'Artifact", "<b\'ArtifactSpan", "<b\'LBody", "<b\'Normal",
+        "<b\'Heading 1", "<b\'Heading 2", "<b\'H1", "<b\'H2", "<b\'Table","<b\'Span", "<b\'P", "\'Annots"]
 
 def detect_tags(input_file, output_file):
     """ Identify PDFs that are tagged """
@@ -95,7 +98,8 @@ def detect_tags(input_file, output_file):
                             password = ''
                             caching = True
                             pagenos=set()
-                            for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password, caching=caching, check_extractable=True):
+                            for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password,
+                                                          caching=caching, check_extractable=True):
                                 interpreter.process_page(page)
 
                             contents = retstr.getvalue().decode()
@@ -165,7 +169,8 @@ def main():
         try:
             detect_tags(input_file,output_file)
             if output_file == "-":
-                # yes_or_no("Are you sure you want to add the data to the existing '%s' file? (keeping a backup is recommended)" % (input_file))
+                # yes_or_no("Are you sure you want to add the data to the existing '%s' file? (keeping a backup is
+                # recommended)" % (input_file))
                 os.remove(input_file)
                 os.rename(output_file, input_file)
                 logging.info("Updated '%s' 'comply' column " % (input_file))
